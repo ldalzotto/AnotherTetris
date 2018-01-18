@@ -1,0 +1,37 @@
+group 'graphDependecy'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = Application
+
+sourceCompatibility = 1.8
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'Application'
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.github.javaparser:javaparser-core:3.5.10'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+task myRun(type: JavaExec) {
+    if(project.hasProperty('myargs')){
+        args(myargs.split(','))
+    }
+  classpath sourceSets.main.runtimeClasspath
+  main = "Application"
+  args "file"
+}

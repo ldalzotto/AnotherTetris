@@ -1,0 +1,20 @@
+
+apply plugin: 'java'
+
+
+version = 0.1
+sourceCompatibility = 1.8
+
+sourceSets.main.java.srcDirs = [ "src/" ]
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile project(':tet-grid-manager')
+    compile project(':tet-element-domain')
+    compile project(':tet-graphics-context')
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}

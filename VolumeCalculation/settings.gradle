@@ -1,0 +1,11 @@
+rootProject.name = 'VolumeCalculation'
+include 'tet-physics-debugger'
+include 'tet-shape-debugger'
+include 'tet-physics-manager'
+include 'core'
+include 'tet-element-domain'
+include 'tet-element-to-positionned-sprite'
+include 'tet-element-generator'
+include 'tet-physics-generation'
+include 'tet-element-vol-calc'
+

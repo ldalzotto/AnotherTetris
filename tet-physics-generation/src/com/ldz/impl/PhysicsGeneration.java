@@ -81,4 +81,8 @@ public class PhysicsGeneration implements IPhysicsGeneration {
         return body;
     }
 
+    @Override
+    public Body createRectangleBody(Vector2 worldPosition, float width, float height) {
+        return this.createGridLimitRectangle(worldPosition, width, height);
+    }
 }

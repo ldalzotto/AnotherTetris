@@ -1,0 +1,25 @@
+apply plugin: "java"
+
+version = 0.1
+sourceCompatibility = 1.8
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+sourceSets.main.java.srcDirs = [ "src/" ]
+
+eclipse.project {
+    name = appName + "-core"
+}
+
+
+    dependencies {
+        compile project(':tet-physics-manager')
+        compile project(':tet-shape-debugger')
+        compile project(':tet-element-generator')
+        compile project(':tet-element-vol-calc')
+        compile project(':tet-element-to-positionned-sprite')
+
+        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        compile "com.kotcrab.vis:vis-ui:1.3.0"
+
+    }

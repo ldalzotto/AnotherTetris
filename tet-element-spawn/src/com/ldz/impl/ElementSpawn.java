@@ -27,7 +27,8 @@ public class ElementSpawn implements IElementSpawn {
         IElementPlayerManager iElementPlayerManager = ElementPlayerManager.getInstance();
 
 
-        TetrisElement tetrisElement = iTetrisElementGenerator.createTetrisElement(createPositions(), TetrisGridContants.GRID_BLOCK_SIZE);
+        TetrisElement tetrisElement = iTetrisElementGenerator.createTetrisElement(createPositions(), TetrisGridContants.GRID_BLOCK_SIZE,
+                iTetrisGrid.getNewTetrisElementFromPool());
         iTetrisGrid.addTetrisElement(tetrisElement);
         iElementPlayerManager.setPlayerElement(tetrisElement);
     }

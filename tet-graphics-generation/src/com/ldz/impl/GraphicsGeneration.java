@@ -1,5 +1,6 @@
 package com.ldz.impl;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -28,21 +29,22 @@ public class GraphicsGeneration implements IGraphicsGeneration {
     public List<Sprite> createTetrisBlockSprite(List<Vector2> worldPositions, float width) {
 
         List<Sprite> returnedSprites = new ArrayList<>();
+        Color color = new Color(MathUtils.random(0.1f, 1), MathUtils.random(0.1f, 1), MathUtils.random(0.1f, 1), 0.75f);
 
         for (Vector2 vector2 :
                 worldPositions) {
-            Sprite createdSprite = createTetrisBlockSprite(vector2, width);
+            Sprite createdSprite = createTetrisBlockSprite(vector2, width, color);
             returnedSprites.add(createdSprite);
         }
         return returnedSprites;
     }
 
-    private Sprite createTetrisBlockSprite(Vector2 worldPosition, float width) {
+    private Sprite createTetrisBlockSprite(Vector2 worldPosition, float width, Color color) {
 
         Integer iWidth = Math.round(width);
 
         Pixmap pixmap = new Pixmap(iWidth, iWidth, Pixmap.Format.RGBA8888);
-        pixmap.setColor(MathUtils.random(0, 1), MathUtils.random(0, 1), MathUtils.random(0, 1), 0.75f);
+        pixmap.setColor(color);
         pixmap.fillRectangle(0, 0, iWidth, iWidth);
         Sprite sprite = new Sprite(new Texture(pixmap));
         return sprite;

@@ -8,10 +8,10 @@ outputDirectory=${currentpath}/out/plantuml
 
 `./gradlew jar`
 
-rù ${outputDirectory}
-rm ${rawDependecyFile}
+rm ${outputDirectory}
+#rm ${rawDependecyFile}
 cd ../
-echo `./gradlew desktop:dependencies --configuration compile` >> ${currentpath}/${rawDependecyFile}
+#echo `./gradlew desktop:dependencies --configuration compile` >> ${currentpath}/${rawDependecyFile}
 
 cd ${currentpath}
 

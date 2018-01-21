@@ -1,21 +1,21 @@
 package com.ldz.impl;
 
 import com.badlogic.gdx.math.Rectangle;
-import com.ldz.itf.IGridInitializer;
-import com.ldz.itf.ITetrisElementGenerator;
-import com.ldz.itf.ITetrisGrid;
-import com.ldz.itf.TetrisGridContants;
+import com.ldz.itf.*;
 
 public class GridInitializer implements IGridInitializer {
 
     private static IGridInitializer instance;
 
     private ITetrisElementGenerator iTetrisElementGenerator;
+    private IOutboundDestroyerGenerator iOutboundDestroyerGenerator;
+
     private ITetrisGrid iTetrisGrid;
 
     private GridInitializer() {
         iTetrisElementGenerator = TetrisElementGenerator.getInstance();
         iTetrisGrid = TetrisGrid.getInstance();
+        iOutboundDestroyerGenerator = OutboundDestroyerGenerator.getInstance();
     }
 
     public static IGridInitializer getInstance() {
@@ -49,5 +49,8 @@ public class GridInitializer implements IGridInitializer {
         //BottomLine bottomLine =  iTetrisElementGenerator.createTetrisBottomLine(TetrisGridContants.GRID_BOTTOM_LEFT_POSITION);
         //iTetrisGrid.addBottomLine(bottomLine);
 
+        //initialize destroyer outbound
+        OutboundDestroyer outboundDestroyer = this.iOutboundDestroyerGenerator.createOutboundDestroyer();
+        this.iTetrisGrid.setOutboundDestroyer(outboundDestroyer);
     }
 }

@@ -1,0 +1,22 @@
+
+apply plugin: 'java'
+
+version = 0.1
+sourceCompatibility = 1.8
+
+sourceSets.main.java.srcDirs = [ "src/" ]
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile project(':tet-element-domain')
+    compile project(':tet-physics-generation')
+    compile project(':tet-shape-debugger')
+    compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+    compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}

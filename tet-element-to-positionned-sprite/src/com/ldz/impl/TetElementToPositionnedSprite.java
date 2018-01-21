@@ -92,22 +92,25 @@ public class TetElementToPositionnedSprite implements ITetElementToPositionnedSp
                     iShapeDebugger = ShapeDebugger.getInstance();
                 }
 
-                iShapeDebugger.pushDrawEvent(new Function<ShapeRenderer, Void>() {
-                    @Override
-                    public Void apply(ShapeRenderer shapeRenderer) {
-                        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+                if(iShapeDebugger.isEnabled()){
+                    iShapeDebugger.pushDrawEvent(new Function<ShapeRenderer, Void>() {
+                        @Override
+                        public Void apply(ShapeRenderer shapeRenderer) {
+                            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
 
-                        if ((float) (diffAngleRad * MathUtils.radiansToDegrees) >= 0) {
-                            shapeRenderer.setColor(Color.BLUE);
-                        } else {
-                            shapeRenderer.setColor(Color.RED);
+                            if ((float) (diffAngleRad * MathUtils.radiansToDegrees) >= 0) {
+                                shapeRenderer.setColor(Color.BLUE);
+                            } else {
+                                shapeRenderer.setColor(Color.RED);
+                            }
+
+                            shapeRenderer.arc(positionWithoutRotation.x, positionWithoutRotation.y, 10, 0, (float) (diffAngleRad * MathUtils.radiansToDegrees));
+                            shapeRenderer.end();
+                            return null;
                         }
+                    }, Gdx.graphics.getDeltaTime());
+                }
 
-                        shapeRenderer.arc(positionWithoutRotation.x, positionWithoutRotation.y, 10, 0, (float) (diffAngleRad * MathUtils.radiansToDegrees));
-                        shapeRenderer.end();
-                        return null;
-                    }
-                }, Gdx.graphics.getDeltaTime());
 
                 Vector2 positionWithRotation = new Vector2(
                         (float) (Math.cos(diffAngleRad) * (positionWithoutRotation.x - originTransform.getPosition().x) - Math.sin(diffAngleRad) * (positionWithoutRotation.y - originTransform.getPosition().y) + originTransform.getPosition().x),

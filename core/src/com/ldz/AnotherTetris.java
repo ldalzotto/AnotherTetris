@@ -19,13 +19,13 @@ public class AnotherTetris extends ApplicationAdapter {
     private ITetrisRewardDetection iTetrisRewardDetection;
     private IElementPlayerManager iElementPlayerManager;
     private IShapeDebugger iShapeDebugger;
+    private IElementEraser iElementEraser;
 
     private Camera camera;
     private Viewport viewport;
 
     public AnotherTetris() {
-        this.iTetrisGrid = TetrisGrid.getInstance();
-    }
+        this.iTetrisGrid = TetrisGrid.getInstance(); }
 
     @Override
     public void create() {
@@ -70,6 +70,12 @@ public class AnotherTetris extends ApplicationAdapter {
 
 
         this.iTetrisPhysicsWorld.render(camera);
+
+        if(this.iElementEraser == null){
+            this.iElementEraser = ElementEraser.getInstance();
+        }
+        this.iElementEraser.eraseAllElements();
+
     }
 
     @Override

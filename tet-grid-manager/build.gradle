@@ -16,6 +16,7 @@ dependencies {
     compile project(':tet-element-domain')
     compile project(':tet-grid-domain')
     compile project(':tet-element-to-positionned-sprite')
+    compile project(':tet-outboundest-domain')
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

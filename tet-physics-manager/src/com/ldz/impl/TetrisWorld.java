@@ -65,4 +65,10 @@ public class TetrisWorld implements ITetrisPhysicsWorld {
         this.world.setContactListener(contactListener);
     }
 
+    @Override
+    public void removeBody(Body body) {
+        if(body!=null){
+            this.world.destroyBody(body);
+        }
+    }
 }

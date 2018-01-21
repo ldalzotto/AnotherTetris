@@ -207,7 +207,9 @@ public class Application {
                                 .filter(field -> {
                                     return (!field.getVariable(0).getName().getIdentifier().equals("instance"));
                                 })
-                                .map(field -> field.toString())
+                                .map(field -> {
+                                    return field.toString().split("=")[0];
+                                })
                                 .collect(Collectors.toList());
                     }
                 }

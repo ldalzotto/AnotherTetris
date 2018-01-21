@@ -19,6 +19,7 @@ eclipse.project {
         compile project(':tet-grid-initializer')
         compile project(':tet-element-player-manager')
         compile project(':tet-shape-debugger')
+        compile project(':tet-element-eraser')
 
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"

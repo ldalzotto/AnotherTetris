@@ -4,44 +4,69 @@ interface ITetrisElementGenerator{
 private IPhysicsGeneration iPhysicsGeneration;
 private IGraphicsGeneration iGraphicsGeneration;
 private IShapeDebugger iShapeDebugger;
-TetrisElement createTetrisElement(List<Vector2> worldPositions, float tetrisGridWidth)
+TetrisElement createTetrisElement(List<Vector2> worldPositions, float tetrisGridWidth, TetrisElement tetrisElement)
 GridLimits createTetrisGrid(Rectangle bottomPos, Rectangle leftPos, Rectangle rightPos)
 }
 class TetrisElementDomainContants
 
+interface IOutboundDestroyerGenerator{ 
+private final Integer BOUND_WIDTH_SCREEN_PERCENT 
+private ITetrisPhysicsContactGeneration iTetrisPhysicsContactGeneration;
+private IPhysicsGeneration iPhysicsGeneration;
+public OutboundDestroyer createOutboundDestroyer()
+}
 interface IPhysicsGeneration{ 
-private static Vector2 BLOCK_VELOCITY = new Vector2(0, -100);
+private static Vector2 BLOCK_VELOCITY 
 private ITetrisPhysicsContactGeneration iTetrisPhysicsContactGeneration;
 Body createTetrisElementBody(List<Vector2> worldPositions, float blockWidht, float blocHeight)
 Body createGridLimitRectangle(Vector2 worldPosition, float width, float height)
+Body createRectangleBody(Vector2 worldPosition, float width, float height)
+}
+interface IMultipleContactListener{ 
+private List<ContactListener> activecContactListeners 
+boolean addContactListener(ContactListener contactListener)
 }
 interface ITetrisGrid{ 
 private ITetrisPhysicsWorld iTetrisPhysicsWorld;
 private IGraphicContext iGraphicContext;
 private ITetElementToPositionnedSprite iTetElementToPositionnedSprite;
-private List<TetrisElement> tetrisElements = new ArrayList<>();
-public BottomLine bottomLine;
+private OutboundDestroyer outboundDestroyer;
+private final Pool<TetrisElement> tetrisElementPool 
+private List<TetrisElement> tetrisElements 
 boolean addTetrisElement(TetrisElement tetrisElement)
-void addBottomLine(BottomLine bottomLine)
 void renderAndUpdate(float delta)
-BottomLine getBottomLine()
-boolean isInField(TetrisElement tetrisElement)
+void setOutboundDestroyer(OutboundDestroyer outboundDestroyer)
+void deleteElementFromGrid(TetrisElement tetrisElement)
+TetrisElement getNewTetrisElementFromPool()
 }
 interface ITetrisPhysicsContactGeneration{ 
+private IMultipleContactListener iMultipleContactListener;
+private ITetrisPhysicsWorld iTetrisPhysicsWorld;
 void createAndRegisterBlockContact()
+void addContactListener(ContactListener contactListener)
 }
 class TetrisGridContants
 
 class AnotherTetris
 
+interface IElementEraser{ 
+private List<TetrisElement> elementsToErase 
+private ITetrisGrid iTetrisGrid;
+private ITetrisPhysicsWorld iTetrisPhysicsWorld;
+void addElementToErase(TetrisElement tetrisElement)
+void eraseAllElements()
+}
+class SingleDestroyer
+
 interface IGridInitializer{ 
 private ITetrisElementGenerator iTetrisElementGenerator;
+private IOutboundDestroyerGenerator iOutboundDestroyerGenerator;
 private ITetrisGrid iTetrisGrid;
-public void initializeGrid()
+void initializeGrid()
 }
 interface IPhysicsDebugger{ 
-private static String KEY_DELIMITER = "=";
-private Map<String, String> keysFromFile = new HashMap<>();
+private static String KEY_DELIMITER 
+private Map<String, String> keysFromFile 
 private File configurationFile;
 boolean isDebugEnabled()
 }
@@ -57,21 +82,22 @@ private IShapeDebugger iShapeDebugger;
 List<Sprite> getSpritesFromTetrisElement(TetrisElement tetrisElement)
 }
 interface ITetrisRewardDetection{ 
-private Boolean generated = false;
+private Boolean generated 
 void checkRewardAndSpawn()
 }
 interface IShapeDebugger{ 
 private IPhysicsDebugger iPhysicsDebugger;
 private ShapeRenderer shapeRenderer;
-private List<Event> drawEvents = new ArrayList<>();
-public void render(Camera camera, float delta)
-public boolean pushDrawEvent(Function<ShapeRenderer, Void> event, float time)
+private List<Event> drawEvents 
+void render(Camera camera, float delta)
+boolean pushDrawEvent(Function<ShapeRenderer, Void> event, float time)
+boolean isEnabled()
 }
 interface IElementPlayerManager{ 
 private IGraphicContext iGraphicContext;
 private ITetrisGrid iTetrisGrid;
 private TetrisElement tetrisElement;
-public void render(float delta)
+void render(float delta)
 void pushElementToGrid()
 void setPlayerElement(TetrisElement playerElement)
 TetrisElement getPlauerElement()
@@ -82,6 +108,7 @@ void updatePhysics(float delta)
 Body registerBody(BodyDef bodyDef)
 void registerContactListener(ContactListener contactListener)
 void render(Camera camera)
+void removeBody(Body body)
 }
 interface IGraphicsGeneration{ 
 List<Sprite> createTetrisBlockSprite(List<Vector2> worldPositions, float width)
@@ -97,6 +124,7 @@ Sprite createBakgroundBlockSprite(Vector2 worldPosition)
 "ITetElementToPositionnedSprite" --> "TetrisElementDomainContants"
 "ITetElementToPositionnedSprite" --> "IShapeDebugger"
 "IShapeDebugger" --> "IPhysicsDebugger"
+"ITetrisGrid" --> "SingleDestroyer"
 "AnotherTetris" --> "ITetrisPhysicsWorld"
 "AnotherTetris" --> "IGraphicContext"
 "AnotherTetris" --> "ITetrisRewardDetection"
@@ -117,6 +145,7 @@ Sprite createBakgroundBlockSprite(Vector2 worldPosition)
 "IElementPlayerManager" --> "ITetrisGrid"
 "IElementPlayerManager" --> "TetrisElementDomainContants"
 "IElementPlayerManager" --> "IGraphicContext"
+"ITetrisPhysicsContactGeneration" --> "IMultipleContactListener"
 "ITetrisElementGenerator" --> "TetrisGridContants"
 "ITetrisElementGenerator" --> "IShapeDebugger"
 "IElementSpawn" --> "IElementPlayerManager"
@@ -124,6 +153,16 @@ Sprite createBakgroundBlockSprite(Vector2 worldPosition)
 "IGridInitializer" --> "ITetrisGrid"
 "IGridInitializer" --> "ITetrisElementGenerator"
 "IGridInitializer" --> "TetrisGridContants"
+"IGridInitializer" --> "IOutboundDestroyerGenerator"
+"IOutboundDestroyerGenerator" --> "SingleDestroyer"
+"IOutboundDestroyerGenerator" --> "IPhysicsGeneration"
+"IOutboundDestroyerGenerator" --> "ITetrisPhysicsContactGeneration"
+"IOutboundDestroyerGenerator" --> "TetrisElementDomainContants"
+"IOutboundDestroyerGenerator" --> "IElementEraser"
+"IElementEraser" --> "TetrisElementDomainContants"
+"IElementEraser" --> "ITetrisGrid"
+"IElementEraser" --> "ITetrisPhysicsWorld"
 "AnotherTetris" --> "IElementPlayerManager"
 "AnotherTetris" --> "IShapeDebugger"
+"AnotherTetris" --> "IElementEraser"
 @enduml

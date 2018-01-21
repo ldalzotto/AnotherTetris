@@ -2,6 +2,7 @@ package com.ldz.impl;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Pool;
 import com.ldz.itf.*;
 
 import java.util.ArrayList;
@@ -10,10 +11,18 @@ import java.util.List;
 public class TetrisGrid implements ITetrisGrid {
 
     private static ITetrisGrid instance;
-    public BottomLine bottomLine;
     private ITetrisPhysicsWorld iTetrisPhysicsWorld;
     private IGraphicContext iGraphicContext;
     private ITetElementToPositionnedSprite iTetElementToPositionnedSprite;
+    private OutboundDestroyer outboundDestroyer;
+
+    private final Pool<TetrisElement> tetrisElementPool = new Pool<TetrisElement>() {
+        @Override
+        protected TetrisElement newObject() {
+            return new TetrisElement();
+        }
+    };
+
     private List<TetrisElement> tetrisElements = new ArrayList<>();
 
     private TetrisGrid() {
@@ -48,11 +57,6 @@ public class TetrisGrid implements ITetrisGrid {
         this.iGraphicContext.render(spriteToRender);
     }
 
-    @Override
-    public void addBottomLine(BottomLine bottomLine) {
-        this.bottomLine = bottomLine;
-    }
-
     private List<Sprite> getSpriteToRender() {
         List<Sprite> sprites = new ArrayList<>();
         for (TetrisElement tetrisElement :
@@ -73,12 +77,18 @@ public class TetrisGrid implements ITetrisGrid {
     }
 
     @Override
-    public BottomLine getBottomLine() {
-        return this.bottomLine;
+    public void setOutboundDestroyer(OutboundDestroyer outboundDestroyer) {
+        this.outboundDestroyer = outboundDestroyer;
     }
 
     @Override
-    public boolean isInField(TetrisElement tetrisElement) {
-        return this.tetrisElements.contains(tetrisElement);
+    public void deleteElementFromGrid(TetrisElement tetrisElement) {
+        this.tetrisElementPool.free(tetrisElement);
+        this.tetrisElements.remove(tetrisElement);
+    }
+
+    @Override
+    public TetrisElement getNewTetrisElementFromPool() {
+        return this.tetrisElementPool.obtain();
     }
 }

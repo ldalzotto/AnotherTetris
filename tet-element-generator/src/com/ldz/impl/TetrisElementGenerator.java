@@ -32,9 +32,9 @@ public class TetrisElementGenerator implements ITetrisElementGenerator {
     }
 
     @Override
-    public TetrisElement createTetrisElement(List<Vector2> worldPositions, float tetrisGridWidth) {
+    public TetrisElement createTetrisElement(List<Vector2> worldPositions, float tetrisGridWidth,
+                                             TetrisElement tetrisElement) {
 
-        TetrisElement tetrisElement = new TetrisElement();
         List<TetrisBlock> tetrisBlocks = new ArrayList<>();
 
         Body body = iPhysicsGeneration.createTetrisElementBody(worldPositions, tetrisGridWidth, tetrisGridWidth);

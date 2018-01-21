@@ -4,12 +4,12 @@ public interface ITetrisGrid {
 
     boolean addTetrisElement(TetrisElement tetrisElement);
 
-    void addBottomLine(BottomLine bottomLine);
-
     void renderAndUpdate(float delta);
 
-    BottomLine getBottomLine();
+    void setOutboundDestroyer(OutboundDestroyer outboundDestroyer);
 
-    boolean isInField(TetrisElement tetrisElement);
+    void deleteElementFromGrid(TetrisElement tetrisElement);
+
+    TetrisElement getNewTetrisElementFromPool();
 
 }

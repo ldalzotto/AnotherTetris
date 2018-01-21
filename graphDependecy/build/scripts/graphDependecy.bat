@@ -63,7 +63,7 @@ set CMD_LINE_ARGS=%*
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\graphDependecy-1.0-SNAPSHOT.jar
+set CLASSPATH=%APP_HOME%\lib\graphDependecy-1.0-SNAPSHOT.jar;%APP_HOME%\lib\javaparser-core-3.5.10.jar
 
 @rem Execute graphDependecy
 "%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRAPH_DEPENDECY_OPTS%  -classpath "%CLASSPATH%" interface org.gradle.platform.base.Application %CMD_LINE_ARGS%

@@ -71,4 +71,9 @@ public class TetrisWorld implements ITetrisPhysicsWorld {
             this.world.destroyBody(body);
         }
     }
+
+    @Override
+    public void rayCast(RayCastCallback rayCastCallback, Vector2 begin, Vector2 end) {
+        this.world.rayCast(rayCastCallback, begin, end);
+    }
 }

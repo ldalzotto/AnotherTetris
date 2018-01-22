@@ -43,6 +43,7 @@ public class ElementPlayerManager implements IElementPlayerManager {
     @Override
     public void setPlayerElement(TetrisElement playerElement) {
         this.tetrisElement = playerElement;
+        iTetrisGrid.addTetrisElement(tetrisElement);
     }
 
     @Override

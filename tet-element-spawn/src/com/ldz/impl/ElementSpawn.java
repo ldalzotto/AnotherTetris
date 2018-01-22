@@ -23,13 +23,10 @@ public class ElementSpawn implements IElementSpawn {
     @Override
     public void spawnElement() {
         ITetrisElementGenerator iTetrisElementGenerator = TetrisElementGenerator.getInstance();
-        ITetrisGrid iTetrisGrid = TetrisGrid.getInstance();
         IElementPlayerManager iElementPlayerManager = ElementPlayerManager.getInstance();
 
 
-        TetrisElement tetrisElement = iTetrisElementGenerator.createTetrisElement(createPositions(), TetrisGridContants.GRID_BLOCK_SIZE,
-                iTetrisGrid.getNewTetrisElementFromPool());
-        iTetrisGrid.addTetrisElement(tetrisElement);
+        TetrisElement tetrisElement = iTetrisElementGenerator.createTetrisElement(createPositions(), TetrisGridContants.GRID_BLOCK_SIZE);
         iElementPlayerManager.setPlayerElement(tetrisElement);
     }
 

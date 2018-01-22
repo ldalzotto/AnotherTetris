@@ -10,7 +10,6 @@ repositories {
 }
 
 dependencies {
-    compile project(':tet-grid-manager')
     compile project(':tet-element-domain')
     compile project(':tet-element-generator')
     compile project(':tet-element-player-manager')

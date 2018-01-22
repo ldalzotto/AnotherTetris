@@ -10,6 +10,4 @@ public interface ITetrisGrid {
 
     void deleteElementFromGrid(TetrisElement tetrisElement);
 
-    TetrisElement getNewTetrisElementFromPool();
-
 }

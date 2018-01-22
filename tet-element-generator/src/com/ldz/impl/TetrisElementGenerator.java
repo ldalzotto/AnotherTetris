@@ -18,10 +18,12 @@ public class TetrisElementGenerator implements ITetrisElementGenerator {
     private IPhysicsGeneration iPhysicsGeneration;
     private IGraphicsGeneration iGraphicsGeneration;
     private IShapeDebugger iShapeDebugger;
+    private ITetElementPoolable iTetElementPoolable;
 
     private TetrisElementGenerator() {
         this.iGraphicsGeneration = GraphicsGeneration.getInstance();
         this.iPhysicsGeneration = PhysicsGeneration.getInstance();
+        this.iTetElementPoolable = TetElementPoolable.getInstance();
     }
 
     public static ITetrisElementGenerator getInstance() {
@@ -32,9 +34,9 @@ public class TetrisElementGenerator implements ITetrisElementGenerator {
     }
 
     @Override
-    public TetrisElement createTetrisElement(List<Vector2> worldPositions, float tetrisGridWidth,
-                                             TetrisElement tetrisElement) {
+    public TetrisElement createTetrisElement(List<Vector2> worldPositions, float tetrisGridWidth) {
 
+        TetrisElement tetrisElement = this.iTetElementPoolable.getElementInstance();
         List<TetrisBlock> tetrisBlocks = new ArrayList<>();
 
         Body body = iPhysicsGeneration.createTetrisElementBody(worldPositions, tetrisGridWidth, tetrisGridWidth);

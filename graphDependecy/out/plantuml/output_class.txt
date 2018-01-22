@@ -4,8 +4,14 @@ interface ITetrisElementGenerator{
 private IPhysicsGeneration iPhysicsGeneration;
 private IGraphicsGeneration iGraphicsGeneration;
 private IShapeDebugger iShapeDebugger;
-TetrisElement createTetrisElement(List<Vector2> worldPositions, float tetrisGridWidth, TetrisElement tetrisElement)
+private ITetElementPoolable iTetElementPoolable;
+TetrisElement createTetrisElement(List<Vector2> worldPositions, float tetrisGridWidth)
 GridLimits createTetrisGrid(Rectangle bottomPos, Rectangle leftPos, Rectangle rightPos)
+}
+interface ITetElementVolumeCalculation{ 
+private IShapeDebugger iShapeDebugger;
+List<Polygon> splitPolygonFromLine(Polygon polygon, Polyline polyline)
+List<Float> calculatePolygonVolumes(List<Polygon> polygons)
 }
 class TetrisElementDomainContants
 
@@ -22,6 +28,11 @@ Body createTetrisElementBody(List<Vector2> worldPositions, float blockWidht, flo
 Body createGridLimitRectangle(Vector2 worldPosition, float width, float height)
 Body createRectangleBody(Vector2 worldPosition, float width, float height)
 }
+interface ITetElementPoolable{ 
+private final Pool<TetrisElement> tetrisElementPool 
+public TetrisElement getElementInstance()
+public void deleteElementFromGrid(TetrisElement tetrisElement)
+}
 interface IMultipleContactListener{ 
 private List<ContactListener> activecContactListeners 
 boolean addContactListener(ContactListener contactListener)
@@ -30,14 +41,13 @@ interface ITetrisGrid{
 private ITetrisPhysicsWorld iTetrisPhysicsWorld;
 private IGraphicContext iGraphicContext;
 private ITetElementToPositionnedSprite iTetElementToPositionnedSprite;
+private ITetElementPoolable iTetElementPoolable;
 private OutboundDestroyer outboundDestroyer;
-private final Pool<TetrisElement> tetrisElementPool 
 private List<TetrisElement> tetrisElements 
 boolean addTetrisElement(TetrisElement tetrisElement)
 void renderAndUpdate(float delta)
 void setOutboundDestroyer(OutboundDestroyer outboundDestroyer)
 void deleteElementFromGrid(TetrisElement tetrisElement)
-TetrisElement getNewTetrisElementFromPool()
 }
 interface ITetrisPhysicsContactGeneration{ 
 private IMultipleContactListener iMultipleContactListener;
@@ -125,14 +135,16 @@ Sprite createBakgroundBlockSprite(Vector2 worldPosition)
 "ITetElementToPositionnedSprite" --> "IShapeDebugger"
 "IShapeDebugger" --> "IPhysicsDebugger"
 "ITetrisGrid" --> "SingleDestroyer"
+"ITetrisGrid" --> "ITetElementPoolable"
+"ITetElementPoolable" --> "TetrisElementDomainContants"
 "AnotherTetris" --> "ITetrisPhysicsWorld"
 "AnotherTetris" --> "IGraphicContext"
 "AnotherTetris" --> "ITetrisRewardDetection"
 "ITetrisRewardDetection" --> "ITetrisGrid"
 "ITetrisRewardDetection" --> "IElementSpawn"
-"IElementSpawn" --> "ITetrisGrid"
 "IElementSpawn" --> "TetrisElementDomainContants"
 "IElementSpawn" --> "ITetrisElementGenerator"
+"ITetrisElementGenerator" --> "ITetElementPoolable"
 "ITetrisElementGenerator" --> "TetrisElementDomainContants"
 "ITetrisElementGenerator" --> "IGraphicsGeneration"
 "ITetrisElementGenerator" --> "IPhysicsGeneration"
@@ -149,6 +161,11 @@ Sprite createBakgroundBlockSprite(Vector2 worldPosition)
 "ITetrisElementGenerator" --> "TetrisGridContants"
 "ITetrisElementGenerator" --> "IShapeDebugger"
 "IElementSpawn" --> "IElementPlayerManager"
+"ITetrisRewardDetection" --> "null"
+"null" --> "TetrisElementDomainContants"
+"null" --> "ITetElementVolumeCalculation"
+"ITetElementVolumeCalculation" --> "IShapeDebugger"
+"null" --> "null"
 "AnotherTetris" --> "IGridInitializer"
 "IGridInitializer" --> "ITetrisGrid"
 "IGridInitializer" --> "ITetrisElementGenerator"

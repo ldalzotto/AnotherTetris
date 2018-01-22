@@ -14,18 +14,14 @@ public class TetrisGrid implements ITetrisGrid {
     private ITetrisPhysicsWorld iTetrisPhysicsWorld;
     private IGraphicContext iGraphicContext;
     private ITetElementToPositionnedSprite iTetElementToPositionnedSprite;
-    private OutboundDestroyer outboundDestroyer;
+    private ITetElementPoolable iTetElementPoolable;
 
-    private final Pool<TetrisElement> tetrisElementPool = new Pool<TetrisElement>() {
-        @Override
-        protected TetrisElement newObject() {
-            return new TetrisElement();
-        }
-    };
+    private OutboundDestroyer outboundDestroyer;
 
     private List<TetrisElement> tetrisElements = new ArrayList<>();
 
     private TetrisGrid() {
+        this.iTetElementPoolable = TetElementPoolable.getInstance();
         this.iTetElementToPositionnedSprite = TetElementToPositionnedSprite.getInstance();
     }
 
@@ -83,12 +79,7 @@ public class TetrisGrid implements ITetrisGrid {
 
     @Override
     public void deleteElementFromGrid(TetrisElement tetrisElement) {
-        this.tetrisElementPool.free(tetrisElement);
+        this.iTetElementPoolable.deleteElementFromGrid(tetrisElement);
         this.tetrisElements.remove(tetrisElement);
-    }
-
-    @Override
-    public TetrisElement getNewTetrisElementFromPool() {
-        return this.tetrisElementPool.obtain();
     }
 }

@@ -1,6 +1,8 @@
 package com.ldz.impl;
 
 import com.ldz.itf.IElementSpawn;
+import com.ldz.itf.ITetRewardLineDetector;
+import com.ldz.itf.ITetRewardLineVolumeDetector;
 import com.ldz.itf.ITetrisRewardDetection;
 
 public class TetrisRewardDetection implements ITetrisRewardDetection {
@@ -9,6 +11,8 @@ public class TetrisRewardDetection implements ITetrisRewardDetection {
     private Boolean generated = false;
 
     private TetrisRewardDetection() {
+        this.iTetRewardLineVolumeDetector = TetRewardLineVolumeDetector.getInstance();
+        this.iTetRewardLineDetector = TetRewardLineDetector.getInstance();
     }
 
     public static ITetrisRewardDetection getInstance() {
@@ -17,6 +21,9 @@ public class TetrisRewardDetection implements ITetrisRewardDetection {
         }
         return instance;
     }
+
+    private ITetRewardLineVolumeDetector iTetRewardLineVolumeDetector;
+    private ITetRewardLineDetector iTetRewardLineDetector;
 
     @Override
     public void checkRewardAndSpawn() {

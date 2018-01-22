@@ -7,8 +7,7 @@ import java.util.List;
 
 public interface ITetrisElementGenerator {
 
-    TetrisElement createTetrisElement(List<Vector2> worldPositions, float tetrisGridWidth,
-                                      TetrisElement tetrisElement);
+    TetrisElement createTetrisElement(List<Vector2> worldPositions, float tetrisGridWidth);
 
     @Deprecated
     GridLimits createTetrisGrid(Rectangle bottomPos, Rectangle leftPos, Rectangle rightPos);

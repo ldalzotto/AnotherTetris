@@ -13,6 +13,7 @@ repositories {
 }
 
 dependencies {
+    compile project(':tet-element-poolable')
     compile project(':tet-element-domain')
     compile project(':tet-graphics-generation')
     compile project(':tet-physics-generation')

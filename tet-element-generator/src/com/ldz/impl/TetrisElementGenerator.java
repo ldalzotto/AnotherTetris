@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.ldz.itf.*;
 
 import java.util.ArrayList;
@@ -19,11 +20,13 @@ public class TetrisElementGenerator implements ITetrisElementGenerator {
     private IGraphicsGeneration iGraphicsGeneration;
     private IShapeDebugger iShapeDebugger;
     private ITetElementPoolable iTetElementPoolable;
+    private ITetBlockPoolable iTetBlockPoolable;
 
     private TetrisElementGenerator() {
         this.iGraphicsGeneration = GraphicsGeneration.getInstance();
         this.iPhysicsGeneration = PhysicsGeneration.getInstance();
         this.iTetElementPoolable = TetElementPoolable.getInstance();
+        this.iTetBlockPoolable = TetBlockPoolable.getInstance();
     }
 
     public static ITetrisElementGenerator getInstance() {
@@ -50,8 +53,9 @@ public class TetrisElementGenerator implements ITetrisElementGenerator {
 
         for (Sprite sprite :
                 elementSprites) {
-            TetrisBlock tetrisBlock = new TetrisBlock();
+            TetrisBlock tetrisBlock = this.iTetBlockPoolable.getBlockInstance();
             tetrisBlock.setSprite(sprite);
+            tetrisBlock.setTetrisElementReference(tetrisElement);
             tetrisBlocks.add(tetrisBlock);
         }
 
@@ -59,7 +63,9 @@ public class TetrisElementGenerator implements ITetrisElementGenerator {
         for (TetrisBlock tetrisBlock :
                 tetrisBlocks) {
             int index = tetrisBlocks.indexOf(tetrisBlock);
-            tetrisBlock.setFixture(body.getFixtureList().get(index));
+            Fixture tetrisBlockFixture = body.getFixtureList().get(index);
+            tetrisBlockFixture.setUserData(tetrisBlock);
+            tetrisBlock.setFixture(tetrisBlockFixture);
         }
 
 
@@ -69,12 +75,15 @@ public class TetrisElementGenerator implements ITetrisElementGenerator {
         this.iShapeDebugger.pushDrawEvent(new Function<ShapeRenderer, Void>() {
             @Override
             public Void apply(ShapeRenderer shapeRenderer) {
-                shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-                shapeRenderer.line(tetrisElement.getBody().getTransform().getPosition(), new Vector2(
-                        tetrisElement.getBody().getTransform().getPosition().x + tetrisElement.getBody().getTransform().getOrientation().x * 10,
-                        tetrisElement.getBody().getTransform().getPosition().y + tetrisElement.getBody().getTransform().getOrientation().y * 10
-                ));
-                shapeRenderer.end();
+                if(tetrisElement.getBody() != null){
+
+                    shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+                    shapeRenderer.line(tetrisElement.getBody().getTransform().getPosition(), new Vector2(
+                            tetrisElement.getBody().getTransform().getPosition().x + tetrisElement.getBody().getTransform().getOrientation().x * 10,
+                            tetrisElement.getBody().getTransform().getPosition().y + tetrisElement.getBody().getTransform().getOrientation().y * 10
+                    ));
+                    shapeRenderer.end();
+                }
                 return null;
             }
         }, 10);

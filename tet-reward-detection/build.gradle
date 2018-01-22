@@ -12,5 +12,8 @@ repositories {
 dependencies {
     compile project(':tet-reward-line-detector')
     compile project(':tet-reward-line-volume-detector')
+    compile project(':tet-shape-debugger')
+    compile project(':tet-grid-domain')
+    compile project(':tet-element-eraser')
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

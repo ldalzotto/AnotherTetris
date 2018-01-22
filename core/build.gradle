@@ -20,6 +20,7 @@ eclipse.project {
         compile project(':tet-element-player-manager')
         compile project(':tet-shape-debugger')
         compile project(':tet-element-eraser')
+        compile project(':tet-element-spawn')
 
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"

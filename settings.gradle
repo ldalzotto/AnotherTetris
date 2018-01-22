@@ -24,4 +24,5 @@ include 'tet-reward-line-detector'
 include 'tet-reward-line-domain'
 include 'tet-reward-line-volume-detector'
 include 'tet-element-poolable'
+include 'tet-block-poolable'
 

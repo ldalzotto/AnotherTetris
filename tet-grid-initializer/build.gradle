@@ -16,5 +16,6 @@ dependencies {
     compile project(':tet-element-generator')
     compile project(':tet-grid-domain')
     compile project(':tet-outboundest-generator')
+    compile project(':tet-reward-detection')
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

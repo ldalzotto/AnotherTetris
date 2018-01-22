@@ -20,6 +20,7 @@ public class AnotherTetris extends ApplicationAdapter {
     private IElementPlayerManager iElementPlayerManager;
     private IShapeDebugger iShapeDebugger;
     private IElementEraser iElementEraser;
+    private IElementSpawn iElementSpawn;
 
     private Camera camera;
     private Viewport viewport;
@@ -35,6 +36,7 @@ public class AnotherTetris extends ApplicationAdapter {
         this.viewport.apply();
         this.iTetrisRewardDetection = TetrisRewardDetection.getInstance();
         this.iShapeDebugger = ShapeDebugger.getInstance();
+        this.iElementSpawn = ElementSpawn.getInstance();
 
         IGridInitializer iGridInitializer = GridInitializer.getInstance();
         iGridInitializer.initializeGrid();
@@ -61,8 +63,10 @@ public class AnotherTetris extends ApplicationAdapter {
 
         this.iShapeDebugger.render(camera, delta);
 
+        this.iTetrisRewardDetection.checkRewardAndSpawn();
+
         if (Gdx.input.justTouched()) {
-            this.iTetrisRewardDetection.checkRewardAndSpawn();
+            this.iElementSpawn.spawnElement();
         }
         if (this.iTetrisPhysicsWorld == null) {
             this.iTetrisPhysicsWorld = TetrisWorld.getInstance();

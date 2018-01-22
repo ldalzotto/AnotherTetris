@@ -29,7 +29,7 @@ public class TetElementVolumeCalculation implements ITetElementVolumeCalculation
     }
 
     @Override
-    public List<Polygon> splitPolygonFromLine(Polygon polygon, Polyline polyline) {
+    public List<Polygon> splitPolygonFromLine(Polygon polygon, Polyline polyline, Color color1, Color color2) {
         float[] lineVertices = polyline.getVertices();
         if (lineVertices.length == 4){
             Vector2 begin = new Vector2(lineVertices[0], lineVertices[1]);
@@ -58,9 +58,9 @@ public class TetElementVolumeCalculation implements ITetElementVolumeCalculation
                            public Void apply(ShapeRenderer shapeRenderer) {
                                shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
                                if(intersectedPolygons.indexOf(intersectedPolygon)==1){
-                                   shapeRenderer.setColor(Color.CORAL);
+                                   shapeRenderer.setColor(color1);
                                }else {
-                                   shapeRenderer.setColor(Color.BLUE);
+                                   shapeRenderer.setColor(color2);
                                }
                                float[] vertices = intersectedPolygon.getTransformedVertices();
                                List<Vector2> polygonPoints = new ArrayList<>();

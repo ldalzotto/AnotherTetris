@@ -1,6 +1,7 @@
 package com.ldz.impl;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.ldz.itf.*;
 
 public class GridInitializer implements IGridInitializer {
@@ -9,6 +10,7 @@ public class GridInitializer implements IGridInitializer {
 
     private ITetrisElementGenerator iTetrisElementGenerator;
     private IOutboundDestroyerGenerator iOutboundDestroyerGenerator;
+    private ITetrisRewardDetection iTetrisRewardDetection;
 
     private ITetrisGrid iTetrisGrid;
 
@@ -16,6 +18,7 @@ public class GridInitializer implements IGridInitializer {
         iTetrisElementGenerator = TetrisElementGenerator.getInstance();
         iTetrisGrid = TetrisGrid.getInstance();
         iOutboundDestroyerGenerator = OutboundDestroyerGenerator.getInstance();
+        iTetrisRewardDetection = TetrisRewardDetection.getInstance();
     }
 
     public static IGridInitializer getInstance() {
@@ -52,5 +55,16 @@ public class GridInitializer implements IGridInitializer {
         //initialize destroyer outbound
         OutboundDestroyer outboundDestroyer = this.iOutboundDestroyerGenerator.createOutboundDestroyer();
         this.iTetrisGrid.setOutboundDestroyer(outboundDestroyer);
+
+        //reward detection
+        float leftx = TetrisGridContants.GRID_BOTTOM_LEFT_POSITION.x - TetrisGridContants.GRID_BLOCK_SIZE;
+        float rightx = (TetrisGridContants.GRID_BOTTOM_LEFT_POSITION.x)+(TetrisGridContants.GRID_BLOCK_SIZE * TetrisGridContants.NB_BLOCK_WIDTH)+TetrisGridContants.GRID_BLOCK_SIZE;
+
+        for (int i = 0;i<TetrisGridContants.NB_BLOCK_HEIGHT-1;i++){
+            this.iTetrisRewardDetection.addRewardLine(new Vector2(leftx,
+                            ((TetrisGridContants.GRID_BOTTOM_LEFT_POSITION.y + (TetrisGridContants.GRID_BLOCK_SIZE*3)/2) ) + (TetrisGridContants.GRID_BLOCK_SIZE*i) ),
+                    new Vector2( rightx ,((TetrisGridContants.GRID_BOTTOM_LEFT_POSITION.y + (TetrisGridContants.GRID_BLOCK_SIZE*3)/2) ) + (TetrisGridContants.GRID_BLOCK_SIZE*i) ))  ;
+        }
+
     }
 }

@@ -3,11 +3,9 @@ package com.ldz.impl;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
-import com.ldz.itf.ITetRewardLineDetector;
-import com.ldz.itf.ITetrisPhysicsWorld;
-import com.ldz.itf.RewardLine;
-import com.ldz.itf.TetrisBlock;
+import com.ldz.itf.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TetRewardLineDetector implements ITetRewardLineDetector {
@@ -27,13 +25,17 @@ public class TetRewardLineDetector implements ITetRewardLineDetector {
 
     @Override
     public List<TetrisBlock> getAllTetrisBlocksIntersecting(RewardLine rewardLine) {
+        List<TetrisBlock> tetrisBlocks = new ArrayList<>();
         this.iTetrisPhysicsWorld.rayCast(new RayCastCallback() {
             @Override
             public float reportRayFixture(Fixture fixture, Vector2 vector2, Vector2 vector21, float v) {
-                return 0;
+                if(fixture.getUserData() instanceof TetrisBlock){
+                    tetrisBlocks.add((TetrisBlock) fixture.getUserData());
+                }
+                return -1;
             }
         }, rewardLine.getBeginPoint(), rewardLine.getEndPoint());
-        return null;
+        return tetrisBlocks;
     }
 
 }

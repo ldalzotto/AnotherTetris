@@ -1,6 +1,7 @@
 
 package com.ldz.impl;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.ldz.itf.IPhysicsGeneration;
@@ -42,7 +43,15 @@ public class PhysicsGeneration implements IPhysicsGeneration {
                 worldPositions) {
 
             PolygonShape polyGonShape = new PolygonShape();
-            polyGonShape.setAsBox(blockWidht / 2, blocHeight / 2, new Vector2(position.x - origin.x, position.y - origin.y), 0);
+            int random = MathUtils.random(0,1);
+            if(random==0){
+                polyGonShape.setAsBox(blockWidht / 2, blocHeight / 2, new Vector2(position.x - origin.x, position.y - origin.y), 0);
+            } else if(random==1){
+                polyGonShape.set(new float[]{
+                        position.x-15,position.y-15, position.x, position.y+15, position.x+15, position.y-15
+                });
+            }
+
             FixtureDef fixtureDef = new FixtureDef();
             fixtureDef.shape = polyGonShape;
             Fixture fixture = body.createFixture(polyGonShape, 100000f);

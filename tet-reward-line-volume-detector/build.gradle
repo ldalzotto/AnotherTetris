@@ -1,3 +1,4 @@
+group 'tet-reward-line-volume-detector'
 
 apply plugin: 'java'
 
@@ -10,6 +11,8 @@ repositories {
 }
 
 dependencies {
-    compile project(':tet-reward-line-volume-detector')
+    compile project(':tet-element-domain')
+    compile project(':tet-element-vol-calc')
+    compile project(':tet-reward-line-domain')
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

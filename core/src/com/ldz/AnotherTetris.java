@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ldz.impl.*;
@@ -31,7 +32,7 @@ public class AnotherTetris extends ApplicationAdapter {
     @Override
     public void create() {
         this.camera = new OrthographicCamera(30, 30);
-        this.viewport = new FitViewport(400, 400, this.camera);
+        this.viewport = new FillViewport(400, 400, this.camera);
         this.iGraphicContext = GraphicsContext.getInstance(new SpriteBatch());
         this.viewport.apply();
         this.iTetrisRewardDetection = TetrisRewardDetection.getInstance();
@@ -41,7 +42,6 @@ public class AnotherTetris extends ApplicationAdapter {
         IGridInitializer iGridInitializer = GridInitializer.getInstance();
         iGridInitializer.initializeGrid();
 
-        //camera.position.set(new Vector2(camera.viewportWidth/2, camera.viewportHeight/2), 0);
     }
 
     @Override

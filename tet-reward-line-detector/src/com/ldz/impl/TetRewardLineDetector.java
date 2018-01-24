@@ -34,7 +34,7 @@ public class TetRewardLineDetector implements ITetRewardLineDetector {
                 }
                 return -1;
             }
-        }, rewardLine.getBeginPoint(), rewardLine.getEndPoint());
+        }, rewardLine.getBeginCenterPoint(), rewardLine.getEndCenterPoint());
         return tetrisBlocks;
     }
 

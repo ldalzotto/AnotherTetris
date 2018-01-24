@@ -1,4 +1,4 @@
-group 'tet-reward-line-volume-detector'
+group 'tet-element-util'
 
 apply plugin: 'java'
 
@@ -6,14 +6,15 @@ version = 0.1
 sourceCompatibility = 1.8
 
 sourceSets.main.java.srcDirs = [ "src/" ]
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
     compile project(':tet-element-domain')
-    compile project(':tet-element-vol-calc')
-    compile project(':tet-reward-line-domain')
-    compile project(':tet-element-util')
+
+    compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+    compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

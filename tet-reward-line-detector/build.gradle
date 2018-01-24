@@ -1,5 +1,4 @@
 group 'tet-reward-line-detector'
-version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 

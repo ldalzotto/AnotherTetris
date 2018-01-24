@@ -30,6 +30,7 @@ public class TetElementVolumeCalculation implements ITetElementVolumeCalculation
 
     @Override
     public List<Polygon> splitPolygonFromLine(Polygon polygon, Polyline polyline) {
+        List<Polygon> returnedPolygons = new ArrayList<>();
         float[] lineVertices = polyline.getVertices();
         if (lineVertices.length == 4){
             Vector2 begin = new Vector2(lineVertices[0], lineVertices[1]);
@@ -81,12 +82,13 @@ public class TetElementVolumeCalculation implements ITetElementVolumeCalculation
                            }
                        }, Gdx.graphics.getDeltaTime());
                    }
+                   returnedPolygons.add(intersectedPolygon);
                }
 
            }
 
         }
-        return null;
+        return returnedPolygons;
     }
 
     private List<Polygon> getIntersectionsPoints(Polygon polygon, Vector2 begin, Vector2 end){
@@ -112,10 +114,18 @@ public class TetElementVolumeCalculation implements ITetElementVolumeCalculation
                     if(this.checkIfPointContainedInLine(intersectionPoint, polygonPoints.get(i), polygonPoints.get(0))){
 
                         if(firtIntersectionIndex == null){
-                            polygonPointsWithCut.add(polygonPoints.size()+1, intersectionPoint);
+                            if(polygonPointsWithCut.size() == polygonPoints.size()){
+                                polygonPointsWithCut.add(intersectionPoint);
+                            } else {
+                                polygonPointsWithCut.add(polygonPoints.size()+1, intersectionPoint);
+                            }
                             firtIntersectionIndex = polygonPoints.size()+1;
                         }else {
-                            polygonPointsWithCut.add(polygonPoints.size()+1, intersectionPoint);
+                            if(polygonPointsWithCut.size() == polygonPoints.size()) {
+                                polygonPointsWithCut.add(intersectionPoint);
+                            } else {
+                                polygonPointsWithCut.add(polygonPoints.size()+1, intersectionPoint);
+                            }
                             secondIntersectionIndex = polygonPoints.size()+1;
                         }
                     }

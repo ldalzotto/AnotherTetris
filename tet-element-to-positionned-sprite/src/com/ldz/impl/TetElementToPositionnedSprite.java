@@ -10,10 +10,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.Transform;
-import com.ldz.itf.IShapeDebugger;
+import com.ldz.tet.shape.debugger.itf.IShapeDebugger;
 import com.ldz.itf.ITetElementToPositionnedSprite;
 import com.ldz.itf.TetrisBlock;
 import com.ldz.itf.TetrisElement;
+import com.ldz.tet.shape.debugger.impl.ShapeDebugger;
 
 import java.util.ArrayList;
 import java.util.List;

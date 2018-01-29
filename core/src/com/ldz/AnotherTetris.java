@@ -7,10 +7,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ldz.impl.*;
 import com.ldz.itf.*;
+import com.ldz.tet.shape.debugger.impl.ShapeDebugger;
+import com.ldz.tet.shape.debugger.itf.IShapeDebugger;
 
 public class AnotherTetris extends ApplicationAdapter {
 

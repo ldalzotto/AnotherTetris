@@ -4,8 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.*;
-import com.ldz.itf.IShapeDebugger;
+import com.ldz.tet.shape.debugger.itf.IShapeDebugger;
 import com.ldz.itf.ITetElementVolumeCalculation;
+import com.ldz.tet.shape.debugger.impl.ShapeDebugger;
 
 import java.util.ArrayList;
 import java.util.Arrays;

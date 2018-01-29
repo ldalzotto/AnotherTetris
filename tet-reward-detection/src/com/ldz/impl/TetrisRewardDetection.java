@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.ldz.itf.*;
+import com.ldz.tet.shape.debugger.impl.ShapeDebugger;
+import com.ldz.tet.shape.debugger.itf.IShapeDebugger;
 
 import java.util.ArrayList;
 import java.util.List;

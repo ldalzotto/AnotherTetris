@@ -1,4 +1,4 @@
-include 'desktop', 'android', 'ios', 'html', 'core', 'ios-moe'
+include 'desktop', 'core'
 include 'tet-physics-manager'
 include 'tet-grid-manager'
 include 'tet-graphics-context'

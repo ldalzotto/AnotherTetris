@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.ldz.tet.physics.debugger.impl.PhysicsDebuggerUtilTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-01-29T22:14:03" hostname="Loic-PC" time="0.0">
+  <properties/>
+  <testcase name="testConstructor" classname="com.ldz.tet.physics.debugger.impl.PhysicsDebuggerUtilTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

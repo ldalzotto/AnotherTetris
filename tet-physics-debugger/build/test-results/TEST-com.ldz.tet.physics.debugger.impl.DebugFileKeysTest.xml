@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.ldz.tet.physics.debugger.impl.DebugFileKeysTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2018-01-29T22:14:02" hostname="Loic-PC" time="0.009">
+  <properties/>
+  <testcase name="testGetValuetNullValue" classname="com.ldz.tet.physics.debugger.impl.DebugFileKeysTest" time="0.008"/>
+  <testcase name="testGetValueNullValueUnknownClass" classname="com.ldz.tet.physics.debugger.impl.DebugFileKeysTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

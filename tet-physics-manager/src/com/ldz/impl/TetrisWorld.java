@@ -3,8 +3,9 @@ package com.ldz.impl;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.ldz.itf.IPhysicsDebugger;
+import com.ldz.tet.physics.debugger.itf.IPhysicsDebugger;
 import com.ldz.itf.ITetrisPhysicsWorld;
+import com.ldz.tet.physics.debugger.impl.PhysicsDebugger;
 
 public class TetrisWorld implements ITetrisPhysicsWorld {
 

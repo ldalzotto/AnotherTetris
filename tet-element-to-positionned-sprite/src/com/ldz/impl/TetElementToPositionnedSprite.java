@@ -93,7 +93,7 @@ public class TetElementToPositionnedSprite implements ITetElementToPositionnedSp
                     iShapeDebugger = ShapeDebugger.getInstance();
                 }
 
-                if(iShapeDebugger.isEnabled()){
+                if (iShapeDebugger.isEnabled()) {
                     iShapeDebugger.pushDrawEvent(new Function<ShapeRenderer, Void>() {
                         @Override
                         public Void apply(ShapeRenderer shapeRenderer) {
@@ -105,7 +105,8 @@ public class TetElementToPositionnedSprite implements ITetElementToPositionnedSp
                                 shapeRenderer.setColor(Color.RED);
                             }
 
-                            shapeRenderer.arc(positionWithoutRotation.x, positionWithoutRotation.y, 10, 0, (float) (diffAngleRad * MathUtils.radiansToDegrees));
+                            shapeRenderer.arc(positionWithoutRotation.x, positionWithoutRotation.y, 10, 0, (float)
+                                    (diffAngleRad * MathUtils.radiansToDegrees));
                             shapeRenderer.end();
                             return null;
                         }
@@ -114,8 +115,12 @@ public class TetElementToPositionnedSprite implements ITetElementToPositionnedSp
 
 
                 Vector2 positionWithRotation = new Vector2(
-                        (float) (Math.cos(diffAngleRad) * (positionWithoutRotation.x - originTransform.getPosition().x) - Math.sin(diffAngleRad) * (positionWithoutRotation.y - originTransform.getPosition().y) + originTransform.getPosition().x),
-                        (float) (Math.sin(diffAngleRad) * (positionWithoutRotation.x - originTransform.getPosition().x) + Math.cos(diffAngleRad) * (positionWithoutRotation.y - originTransform.getPosition().y) + originTransform.getPosition().y)
+                        (float) (Math.cos(diffAngleRad) * (positionWithoutRotation.x - originTransform.getPosition()
+                                .x) - Math.sin(diffAngleRad) * (positionWithoutRotation.y - originTransform
+                                .getPosition().y) + originTransform.getPosition().x),
+                        (float) (Math.sin(diffAngleRad) * (positionWithoutRotation.x - originTransform.getPosition()
+                                .x) + Math.cos(diffAngleRad) * (positionWithoutRotation.y - originTransform
+                                .getPosition().y) + originTransform.getPosition().y)
                 );
 
 
@@ -125,4 +130,5 @@ public class TetElementToPositionnedSprite implements ITetElementToPositionnedSp
             }
         }
     }
+
 }

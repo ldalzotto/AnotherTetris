@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>PhysicsDebuggerUtil.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tet-physics-debugger</a> &gt; <a href="index.source.html" class="el_package">com.ldz.tet.physics.debugger.impl</a> &gt; <span class="el_source">PhysicsDebuggerUtil.java</span></div><h1>PhysicsDebuggerUtil.java</h1><pre class="source lang-java linenums">/*
+ *  (C) Copyright 2018 LDZCorp and others.
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ *  Contributors:
+ */
+
+package com.ldz.tet.physics.debugger.impl;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+/**
+ * &lt;p&gt;Utlity class of {@link PhysicsDebugger}&lt;/p&gt;
+ */
+public final class PhysicsDebuggerUtil {
+
+    /**
+     * constructor
+     */
+<span class="fc" id="L34">    private PhysicsDebuggerUtil() {</span>
+
+<span class="fc" id="L36">    }</span>
+
+    /**
+     * &lt;p&gt;
+     * Permet de caster la veur souhaitÃ©e
+     * &lt;/p&gt;
+     *
+     * @param value la valeur que l'on souhaite caster
+     * @param &lt;T&gt;   le type souhaitÃ©
+     * @return la valeur castÃ©e
+     */
+    public static &lt;T&gt; T castValue(final Object value) {
+<span class="fc" id="L48">        return (T) value;</span>
+    }
+
+    /**
+     * &lt;p&gt;CrÃ©ation du file en fonction du path renseignÃ© en entrÃ©e&lt;/p&gt;
+     *
+     * @param path Le path du fichier
+     * @return le file
+     */
+    @SuppressWarnings(&quot;findsecbugs:PATH_TRAVERSAL_IN&quot;)
+    public static File getFileFromPath(final String path) {
+<span class="fc" id="L59">        return new File(path);</span>
+    }
+
+    /**
+     * &lt;p&gt;
+     *     Creation d'un buffered reader Ã  partir d'un file path.
+     * &lt;/p&gt;
+     * @param filePath le chemin de fichier que l'on souhaite lire
+     * @return le buffered reader associÃ©
+     * @throws IOException IOException
+     */
+    @SuppressWarnings(&quot;pmd:LawOfDemeter&quot;)
+    public static BufferedReader getBufferedReaderFromFilePath(final String filePath) throws IOException {
+<span class="fc" id="L72">        final File configurationFile = PhysicsDebuggerUtil.getFileFromPath</span>
+<span class="fc" id="L73">                (filePath);</span>
+
+        //begin lecture du fichier
+<span class="fc" id="L76">        Path path = configurationFile.toPath();</span>
+<span class="fc" id="L77">        InputStream inputStream = Files.newInputStream(path);</span>
+<span class="fc" id="L78">        InputStreamReader inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);</span>
+<span class="fc" id="L79">        return new BufferedReader(inputStreamReader);</span>
+        //end lecture du fichier
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

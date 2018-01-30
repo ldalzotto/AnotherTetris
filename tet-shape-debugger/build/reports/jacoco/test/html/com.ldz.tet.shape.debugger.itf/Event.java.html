@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Event.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tet-shape-debugger</a> &gt; <a href="index.source.html" class="el_package">com.ldz.tet.shape.debugger.itf</a> &gt; <span class="el_source">Event.java</span></div><h1>Event.java</h1><pre class="source lang-java linenums">/*
+ *  (C) Copyright 2018 LDZCorp and others.
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ *  Contributors:
+ */
+
+package com.ldz.tet.shape.debugger.itf;
+
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+
+import java.util.function.Function;
+
+public class Event {
+
+<span class="nc" id="L27">    private static final Float NO_TIME_LEFT = 0f;</span>
+
+<span class="nc" id="L29">    public Event() {</span>
+        //do nothing
+<span class="nc" id="L31">    }</span>
+
+    private Function&lt;ShapeRenderer, Void&gt; eventProcess;
+    private float timeLeft;
+    private ShapeRenderer shapeRendererReference;
+
+    public Function&lt;ShapeRenderer, Void&gt; getEventProcess() {
+<span class="nc" id="L38">        return eventProcess;</span>
+    }
+
+    public void setEventProcess(Function&lt;ShapeRenderer, Void&gt; eventProcess) {
+<span class="nc" id="L42">        this.eventProcess = eventProcess;</span>
+<span class="nc" id="L43">    }</span>
+
+    public float getTimeLeft() {
+<span class="nc" id="L46">        return timeLeft;</span>
+    }
+
+    public void setTimeLeft(float timeLeft) {
+<span class="nc" id="L50">        this.timeLeft = timeLeft;</span>
+<span class="nc" id="L51">    }</span>
+
+    public ShapeRenderer getShapeRendererReference() {
+<span class="nc" id="L54">        return shapeRendererReference;</span>
+    }
+
+    public void setShapeRendererReference(ShapeRenderer shapeRendererReference) {
+<span class="nc" id="L58">        this.shapeRendererReference = shapeRendererReference;</span>
+<span class="nc" id="L59">    }</span>
+
+    public void applyEvent() {
+<span class="nc" id="L62">        this.eventProcess.apply(this.shapeRendererReference);</span>
+<span class="nc" id="L63">    }</span>
+
+    public boolean noTimeLeft() {
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        return this.getTimeLeft() &lt;= NO_TIME_LEFT;</span>
+    }
+
+    public void makeTimeElapse(final float delta) {
+<span class="nc" id="L70">        this.setTimeLeft(this.getTimeLeft() - delta);</span>
+<span class="nc" id="L71">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

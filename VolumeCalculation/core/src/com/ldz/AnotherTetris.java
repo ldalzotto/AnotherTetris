@@ -16,6 +16,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ldz.impl.*;
 import com.ldz.itf.*;
+import com.ldz.tet.shape.debugger.impl.ShapeDebugger;
+import com.ldz.tet.shape.debugger.itf.IShapeDebugger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,6 +42,7 @@ public class AnotherTetris extends ApplicationAdapter {
 
     public AnotherTetris() {
     }
+
     @Override
     public void create() {
         this.camera = new OrthographicCamera(30, 30);
@@ -47,19 +50,20 @@ public class AnotherTetris extends ApplicationAdapter {
         this.viewport.apply();
         this.iShapeDebugger = ShapeDebugger.getInstance();
         this.iTetrisElementGenerator = TetrisElementGenerator.getInstance();
-        this.tetrisElement = this.iTetrisElementGenerator.createTetrisElement(Arrays.asList(new Vector2(0,0), new Vector2(40,40),
-                new Vector2(-40, 20), new Vector2(80,60)), 30, new TetrisElement());
+        this.tetrisElement = this.iTetrisElementGenerator.createTetrisElement(Arrays.asList(new Vector2(0, 0), new
+                        Vector2(40, 40),
+                new Vector2(-40, 20), new Vector2(80, 60)), 30, new TetrisElement());
         this.iTetElementToPositionnedSprite = TetElementToPositionnedSprite.getInstance();
         this.iTetElementVolumeCalculation = TetElementVolumeCalculation.getInstance();
         this.customPolygons.add(this.registerPolygon(new Polygon(new float[]{
-                -15,-15,0,15,15,15
+                -15, -15, 0, 15, 15, 15
         })));
 
 
         this.cuttedLine = new Polyline(new float[]{
-                -Gdx.graphics.getWidth()/2, -40f, Gdx.graphics.getWidth()/2, 20f
+                -Gdx.graphics.getWidth() / 2, -40f, Gdx.graphics.getWidth() / 2, 20f
         });
-        this.cuttedLine.setOrigin(0,0);
+        this.cuttedLine.setOrigin(0, 0);
     }
 
     @Override
@@ -77,16 +81,17 @@ public class AnotherTetris extends ApplicationAdapter {
         }
 
         this.iTetrisPhysicsWorld.render(camera);
-        this.tetrisElement.getBody().setTransform(this.tetrisElement.getBody().getTransform().getPosition(), this.tetrisElement.getBody().getTransform().getRotation() + Gdx.graphics.getDeltaTime());
+        this.tetrisElement.getBody().setTransform(this.tetrisElement.getBody().getTransform().getPosition(), this
+                .tetrisElement.getBody().getTransform().getRotation() + Gdx.graphics.getDeltaTime());
 
         List<Polygon> polygons = this.iTetElementToPositionnedSprite.tetrisElementToPolygon(this.tetrisElement);
-        this.cuttedLine.rotate(Gdx.graphics.getDeltaTime()*9);
+        this.cuttedLine.rotate(Gdx.graphics.getDeltaTime() * 9);
 
         for (Polygon polygon :
                 polygons) {
-            this.iTetElementVolumeCalculation.splitPolygonFromLine(polygon, new Polyline(this.cuttedLine.getTransformedVertices()), Color.BLUE, Color.CORAL);
+            this.iTetElementVolumeCalculation.splitPolygonFromLine(polygon, new Polyline(this.cuttedLine
+                    .getTransformedVertices()));
         }
-
 
 
     }
@@ -98,7 +103,7 @@ public class AnotherTetris extends ApplicationAdapter {
     }
 
 
-    private Polygon registerPolygon(Polygon polygon){
+    private Polygon registerPolygon(Polygon polygon) {
 
 
         if (this.iTetrisPhysicsWorld == null) {
@@ -109,7 +114,7 @@ public class AnotherTetris extends ApplicationAdapter {
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         Body body = iTetrisPhysicsWorld.registerBody(bodyDef);
 
-        body.setTransform(new Vector2(0,0), 0);
+        body.setTransform(new Vector2(0, 0), 0);
 
         PolygonShape polygonShape = new PolygonShape();
         polygonShape.set(polygon.getTransformedVertices());

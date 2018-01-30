@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ShapeDebugger.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tet-shape-debugger</a> &gt; <a href="index.source.html" class="el_package">com.ldz.tet.shape.debugger.impl</a> &gt; <span class="el_source">ShapeDebugger.java</span></div><h1>ShapeDebugger.java</h1><pre class="source lang-java linenums">/*
+ *  (C) Copyright 2018 LDZCorp and others.
+ *
+ *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ *  Contributors:
+ */
+
+package com.ldz.tet.shape.debugger.impl;
+
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.ldz.tet.shape.debugger.itf.Event;
+import com.ldz.tet.physics.debugger.itf.IPhysicsDebugger;
+import com.ldz.tet.shape.debugger.itf.IShapeDebugger;
+import com.ldz.tet.physics.debugger.impl.PhysicsDebugger;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.function.Function;
+
+/**
+ * &lt;p&gt;
+ *     ImplÃ©mentation de {@link IShapeDebugger}.
+ *     {@see IShapeDebugger}
+ * &lt;/p&gt;
+ */
+public final class ShapeDebugger implements IShapeDebugger {
+
+    /**
+     * &lt;p&gt;L'instance du singleton&lt;/p&gt;
+     */
+    private static IShapeDebugger instance;
+
+    /**
+     * &lt;p&gt;L'instance du debuggeur du monde physique&lt;/p&gt;
+     */
+    private final IPhysicsDebugger iPhysicsDebugger;
+
+    /**
+     * &lt;p&gt;L'objet permettant d'afficher le rendu des Ã©vÃ¨nements de debug&lt;/p&gt;
+     */
+    private final ShapeRenderer shapeRenderer;
+
+    /**
+     * &lt;p&gt;La file d'attente des Ã©vÃ¨nement de debuggage&lt;/p&gt;
+     */
+<span class="nc" id="L59">    private final List&lt;Event&gt; drawEvents = new ArrayList&lt;&gt;();</span>
+
+    /**
+     * &lt;p&gt;Constructeur&lt;/p&gt;
+     */
+<span class="nc" id="L64">    private ShapeDebugger() {</span>
+<span class="nc" id="L65">        this.shapeRenderer = new ShapeRenderer();</span>
+<span class="nc" id="L66">        this.iPhysicsDebugger = PhysicsDebugger.getInstance();</span>
+<span class="nc" id="L67">    }</span>
+
+    /**
+     * &lt;p&gt;RÃ©cupÃ©ration de l'instance statique&lt;/p&gt;
+     * @return instance statique
+     */
+    public static IShapeDebugger getInstance() {
+<span class="nc" id="L74">        synchronized (ShapeDebugger.class) {</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">            if (instance == null) {</span>
+<span class="nc" id="L76">                instance = new ShapeDebugger();</span>
+            }
+<span class="nc" id="L78">            return instance;</span>
+<span class="nc" id="L79">        }</span>
+    }
+
+    @Override
+    public void render(final Camera camera, final float delta) {
+<span class="nc bnc" id="L84" title="All 2 branches missed.">        if (this.iPhysicsDebugger.isDebugEnabled()) {</span>
+<span class="nc" id="L85">            this.shapeRenderer.setProjectionMatrix(camera.combined);</span>
+
+<span class="nc bnc" id="L87" title="All 2 branches missed.">            for (final Iterator&lt;Event&gt; eventIterator = this.drawEvents.iterator(); eventIterator.hasNext(); ) {</span>
+<span class="nc" id="L88">                final Event event = eventIterator.next();</span>
+<span class="nc" id="L89">                event.applyEvent();</span>
+<span class="nc" id="L90">                event.makeTimeElapse(delta);</span>
+<span class="nc" id="L91">            }</span>
+
+<span class="nc" id="L93">            List&lt;Event&gt; tmp = new ArrayList&lt;&gt;(this.drawEvents);</span>
+
+<span class="nc bnc" id="L95" title="All 2 branches missed.">            for (final Iterator&lt;Event&gt; eventIterator = tmp.iterator(); eventIterator.hasNext(); ) {</span>
+<span class="nc" id="L96">                Event event = eventIterator.next();</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">                if (event.noTimeLeft()) {</span>
+<span class="nc" id="L98">                    this.drawEvents.remove(event);</span>
+                }
+<span class="nc" id="L100">            }</span>
+
+        }
+<span class="nc" id="L103">    }</span>
+
+    @Override
+    public boolean pushDrawEvent(final Function&lt;ShapeRenderer, Void&gt; event, final float
+            time) {
+<span class="nc bnc" id="L108" title="All 2 branches missed.">        if (this.iPhysicsDebugger.isDebugEnabled()) {</span>
+<span class="nc" id="L109">            Event event1 = new Event();</span>
+<span class="nc" id="L110">            event1.setEventProcess(event);</span>
+<span class="nc" id="L111">            event1.setTimeLeft(time);</span>
+<span class="nc" id="L112">            event1.setShapeRendererReference(shapeRenderer);</span>
+<span class="nc" id="L113">            return this.drawEvents.add(event1);</span>
+        }
+<span class="nc" id="L115">        return false;</span>
+    }
+
+    @Override
+    public boolean isEnabled() {
+<span class="nc" id="L120">        return this.iPhysicsDebugger.isDebugEnabled();</span>
+    }
+
+    /**
+     * &lt;p&gt;getDrawEvents&lt;/p&gt;
+     * @return {@link #drawEvents}
+     */
+    public List&lt;Event&gt; getDrawEvents() {
+<span class="nc" id="L128">        return drawEvents;</span>
+    }
+
+    /**
+     * &lt;p&gt;getiPhysicsDebugger&lt;/p&gt;
+     * @return {@link #iPhysicsDebugger}
+     */
+    public IPhysicsDebugger getiPhysicsDebugger() {
+<span class="nc" id="L136">        return iPhysicsDebugger;</span>
+    }
+
+    /**
+     * &lt;p&gt;getShapeRenderer&lt;/p&gt;
+     * @return {@link #shapeRenderer}
+     */
+    public ShapeRenderer getShapeRenderer() {
+<span class="nc" id="L144">        return shapeRenderer;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

@@ -6,6 +6,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.ldz.itf.*;
+import com.ldz.tet.shape.debugger.impl.ShapeDebugger;
+import com.ldz.tet.shape.debugger.itf.IShapeDebugger;
 
 import java.util.ArrayList;
 import java.util.List;

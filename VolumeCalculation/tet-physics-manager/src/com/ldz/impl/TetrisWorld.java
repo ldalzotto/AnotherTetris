@@ -3,8 +3,9 @@ package com.ldz.impl;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.ldz.itf.IPhysicsDebugger;
 import com.ldz.itf.ITetrisPhysicsWorld;
+import com.ldz.tet.physics.debugger.impl.PhysicsDebugger;
+import com.ldz.tet.physics.debugger.itf.IPhysicsDebugger;
 
 public class TetrisWorld implements ITetrisPhysicsWorld {
 
@@ -51,7 +52,7 @@ public class TetrisWorld implements ITetrisPhysicsWorld {
     @Override
     public void render(Camera camera) {
         if (this.iPhysicsDebugger.isDebugEnabled()) {
-          //  this.box2DDebugRenderer.render(this.world, camera.combined);
+            //  this.box2DDebugRenderer.render(this.world, camera.combined);
         }
     }
 
@@ -67,7 +68,7 @@ public class TetrisWorld implements ITetrisPhysicsWorld {
 
     @Override
     public void removeBody(Body body) {
-        if(body!=null){
+        if (body != null) {
             this.world.destroyBody(body);
         }
     }

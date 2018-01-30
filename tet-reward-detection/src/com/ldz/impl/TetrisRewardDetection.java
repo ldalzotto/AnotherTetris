@@ -14,7 +14,7 @@ import java.util.function.Function;
 
 public class TetrisRewardDetection implements ITetrisRewardDetection {
 
-    private final float HEIGHT_AREA_REWARD = 0.6f;
+    private final float HEIGHT_AREA_REWARD = 0.3f;
 
     private static ITetrisRewardDetection instance;
     private List<RewardLine> rewardLines = new ArrayList<>();
@@ -45,7 +45,7 @@ public class TetrisRewardDetection implements ITetrisRewardDetection {
             List<TetrisBlock> tetrisBlocksOnCurrentLine =
                     iTetRewardLineDetector.getAllTetrisBlocksIntersecting(rewardLine);
 
-            if(this.iShapeDebugger.isEnabled()){
+            if (this.iShapeDebugger.isEnabled()) {
                 this.iShapeDebugger.pushDrawEvent(new Function<ShapeRenderer, Void>() {
                     @Override
                     public Void apply(ShapeRenderer shapeRenderer) {
@@ -59,13 +59,13 @@ public class TetrisRewardDetection implements ITetrisRewardDetection {
                 }, Gdx.graphics.getDeltaTime());
             }
 
-            if(tetrisBlocksOnCurrentLine.size() >= TetrisGridContants.NB_BLOCK_WIDTH-2){
+            if (tetrisBlocksOnCurrentLine.size() >= TetrisGridContants.NB_BLOCK_WIDTH - 2) {
                 List<CuttedRewardBlock> cuttedRewardBlocks =
                         this.iTetRewardLineVolumeDetector.getCuttedBlockDetails(rewardLine, tetrisBlocksOnCurrentLine);
 
                 float theoricalArea =
                         Math.abs(rewardLine.getBeginUpperPoint().y - rewardLine.getBeginLowerPoint().y)
-                          * Math.abs(rewardLine.getEndUpperPoint().x - rewardLine.getBeginUpperPoint().x);
+                                * Math.abs(rewardLine.getEndUpperPoint().x - rewardLine.getBeginUpperPoint().x);
 
                 float averationAreaRatio = 0;
                 for (CuttedRewardBlock cuttedRewardBlock :
@@ -73,10 +73,10 @@ public class TetrisRewardDetection implements ITetrisRewardDetection {
                     averationAreaRatio += cuttedRewardBlock.getContainedArea();
                 }
                 averationAreaRatio = averationAreaRatio / theoricalArea;
-                if(averationAreaRatio >= HEIGHT_AREA_REWARD){
+                if (averationAreaRatio >= HEIGHT_AREA_REWARD) {
                     for (TetrisBlock tetrisBlockToErase :
                             tetrisBlocksOnCurrentLine) {
-                       this.iElementEraser.addBlockToErase(tetrisBlockToErase);
+                        this.iElementEraser.addBlockToErase(tetrisBlockToErase);
                     }
                 }
             }
@@ -91,11 +91,15 @@ public class TetrisRewardDetection implements ITetrisRewardDetection {
         rewardLine.setEndCenterPoint(endPosition);
 
         //set upper and bottom
-        rewardLine.setBeginUpperPoint(new Vector2(beginPosition).add(0, TetrisGridContants.GRID_BLOCK_SIZE * HEIGHT_AREA_REWARD/2));
-        rewardLine.setEndUpperPoint(new Vector2(endPosition).add(0, TetrisGridContants.GRID_BLOCK_SIZE * HEIGHT_AREA_REWARD/2));
+        rewardLine.setBeginUpperPoint(new Vector2(beginPosition).add(0, TetrisGridContants.GRID_BLOCK_SIZE *
+                HEIGHT_AREA_REWARD / 2));
+        rewardLine.setEndUpperPoint(new Vector2(endPosition).add(0, TetrisGridContants.GRID_BLOCK_SIZE *
+                HEIGHT_AREA_REWARD / 2));
 
-        rewardLine.setBeginLowerPoint(new Vector2(beginPosition).add(0, TetrisGridContants.GRID_BLOCK_SIZE * -HEIGHT_AREA_REWARD/2));
-        rewardLine.setEndLowerPoint(new Vector2(endPosition).add(0, TetrisGridContants.GRID_BLOCK_SIZE * -HEIGHT_AREA_REWARD/2));
+        rewardLine.setBeginLowerPoint(new Vector2(beginPosition).add(0, TetrisGridContants.GRID_BLOCK_SIZE *
+                -HEIGHT_AREA_REWARD / 2));
+        rewardLine.setEndLowerPoint(new Vector2(endPosition).add(0, TetrisGridContants.GRID_BLOCK_SIZE *
+                -HEIGHT_AREA_REWARD / 2));
 
 
         this.rewardLines.add(rewardLine);

@@ -10,10 +10,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.Transform;
-import com.ldz.itf.IShapeDebugger;
 import com.ldz.itf.ITetElementToPositionnedSprite;
 import com.ldz.itf.TetrisBlock;
 import com.ldz.itf.TetrisElement;
+import com.ldz.tet.shape.debugger.impl.ShapeDebugger;
+import com.ldz.tet.shape.debugger.itf.IShapeDebugger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,14 +60,14 @@ public class TetElementToPositionnedSprite implements ITetElementToPositionnedSp
                 tetrisElement.getTetrisBlocks()) {
             Polygon polygon = this.tetrisBlockToPolygon(tetrisBlock, tetrisElement.getBody().getTransform());
             polygon.rotate(tetrisElement.getBody().getTransform().getRotation() * MathUtils.radiansToDegrees);
-            if(polygon!=null){
+            if (polygon != null) {
                 polygons.add(polygon);
             }
         }
         return polygons;
     }
 
-    private Polygon tetrisBlockToPolygon(TetrisBlock tetrisBlock, Transform originTransform){
+    private Polygon tetrisBlockToPolygon(TetrisBlock tetrisBlock, Transform originTransform) {
         Shape tetBlockShape = tetrisBlock.getFixture().getShape();
 
         if (tetBlockShape instanceof PolygonShape) {
@@ -131,7 +132,7 @@ public class TetElementToPositionnedSprite implements ITetElementToPositionnedSp
                     iShapeDebugger = ShapeDebugger.getInstance();
                 }
 
-                if(iShapeDebugger.isEnabled()){
+                if (iShapeDebugger.isEnabled()) {
                     iShapeDebugger.pushDrawEvent(new Function<ShapeRenderer, Void>() {
                         @Override
                         public Void apply(ShapeRenderer shapeRenderer) {
@@ -143,7 +144,8 @@ public class TetElementToPositionnedSprite implements ITetElementToPositionnedSp
                                 shapeRenderer.setColor(Color.RED);
                             }
 
-                            shapeRenderer.arc(positionWithoutRotation.x, positionWithoutRotation.y, 10, 0, (float) (diffAngleRad * MathUtils.radiansToDegrees));
+                            shapeRenderer.arc(positionWithoutRotation.x, positionWithoutRotation.y, 10, 0, (float)
+                                    (diffAngleRad * MathUtils.radiansToDegrees));
                             shapeRenderer.end();
                             return null;
                         }
@@ -152,8 +154,12 @@ public class TetElementToPositionnedSprite implements ITetElementToPositionnedSp
 
 
                 Vector2 positionWithRotation = new Vector2(
-                        (float) (Math.cos(diffAngleRad) * (positionWithoutRotation.x - originTransform.getPosition().x) - Math.sin(diffAngleRad) * (positionWithoutRotation.y - originTransform.getPosition().y) + originTransform.getPosition().x),
-                        (float) (Math.sin(diffAngleRad) * (positionWithoutRotation.x - originTransform.getPosition().x) + Math.cos(diffAngleRad) * (positionWithoutRotation.y - originTransform.getPosition().y) + originTransform.getPosition().y)
+                        (float) (Math.cos(diffAngleRad) * (positionWithoutRotation.x - originTransform.getPosition()
+                                .x) - Math.sin(diffAngleRad) * (positionWithoutRotation.y - originTransform
+                                .getPosition().y) + originTransform.getPosition().x),
+                        (float) (Math.sin(diffAngleRad) * (positionWithoutRotation.x - originTransform.getPosition()
+                                .x) + Math.cos(diffAngleRad) * (positionWithoutRotation.y - originTransform
+                                .getPosition().y) + originTransform.getPosition().y)
                 );
 
 

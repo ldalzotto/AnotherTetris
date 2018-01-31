@@ -1,17 +1,16 @@
-package com.ldz.impl;
+package com.ldz.tet.element.vol.calc.impl;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.*;
+import com.ldz.polygon.and.line.intersector.impl.PolygonAndLineIntersector;
+import com.ldz.polygon.and.line.intersector.itf.IPolygonAndLineIntersector;
+import com.ldz.tet.element.vol.calc.domain.IntersectingLine;
+import com.ldz.tet.element.vol.calc.domain.VolumePolygon;
 import com.ldz.tet.shape.debugger.itf.IShapeDebugger;
-import com.ldz.itf.ITetElementVolumeCalculation;
+import com.ldz.tet.element.vol.calc.itf.ITetElementVolumeCalculation;
 import com.ldz.tet.shape.debugger.impl.ShapeDebugger;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 
 public class TetElementVolumeCalculation implements ITetElementVolumeCalculation {
 
@@ -40,12 +39,11 @@ public class TetElementVolumeCalculation implements ITetElementVolumeCalculation
         if (intersectingLine.isALine()) {
             intersectingLine.displayDebug(iShapeDebugger);
 
-            IntersectorPolyWithLine intersectorPolyWithLine = new IntersectorPolyWithLine(intersectingLine,
-                    volumePolygon);
+            IPolygonAndLineIntersector iPolygonAndLineIntersector = PolygonAndLineIntersector.createInstance(intersectingLine, volumePolygon);
 
-            if (intersectorPolyWithLine.isIntersecting()) {
+            if (iPolygonAndLineIntersector.isIntersecting()) {
 
-                List<VolumePolygon> cuttedPolygons = intersectorPolyWithLine.getCuttedPolygons();
+                List<VolumePolygon> cuttedPolygons = iPolygonAndLineIntersector.getCuttedPolygons();
 
                 for (VolumePolygon intersectedPolygon :
                         cuttedPolygons) {

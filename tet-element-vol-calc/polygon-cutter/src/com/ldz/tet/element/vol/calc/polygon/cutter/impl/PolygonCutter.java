@@ -1,38 +1,33 @@
-/*
- *  (C) Copyright 2018 LDZCorp and others.
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  Contributors:
- */
-
-package com.ldz.impl;
+package com.ldz.tet.element.vol.calc.polygon.cutter.impl;
 
 import com.badlogic.gdx.math.Vector2;
+import com.ldz.line.and.line.intersector.impl.LineAndLineIntersector;
+import com.ldz.line.and.line.intersector.itf.ILineAndLineIntersector;
+import com.ldz.tet.element.vol.calc.domain.CuttedPolyonVertices;
+import com.ldz.tet.element.vol.calc.domain.IntersectedPoint;
+import com.ldz.tet.element.vol.calc.domain.IntersectingLine;
+import com.ldz.tet.element.vol.calc.domain.VolumePolygon;
+import com.ldz.tet.element.vol.calc.polygon.cutter.itf.IPolygonCutter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PolygonCutter {
+public class PolygonCutter implements IPolygonCutter {
 
     private VolumePolygon volumePolygon;
     private IntersectingLine intersectingLine;
 
-    public PolygonCutter(VolumePolygon volumePolygon, IntersectingLine intersectingLine) {
+    private PolygonCutter(VolumePolygon volumePolygon, IntersectingLine intersectingLine) {
         this.volumePolygon = volumePolygon;
         this.intersectingLine = intersectingLine;
     }
 
+
+    public static IPolygonCutter createInstance(VolumePolygon volumePolygon, IntersectingLine intersectingLine) {
+        return new PolygonCutter(volumePolygon, intersectingLine);
+    }
+
+    @Override
     public CuttedPolyonVertices executeCuttedVertices() {
         List<Vector2> polygonPoints = volumePolygon.getVerticesAsVector();
 
@@ -52,8 +47,8 @@ public class PolygonCutter {
                         polygonPoints.get(i + 1));
             }
 
-            IntersectorLine intersectorLine = new IntersectorLine(polygonFace, intersectingLine);
-            intersectionPoint = intersectorLine.getIntersectionPoint();
+            ILineAndLineIntersector iLineAndLineIntersector = LineAndLineIntersector.createInstance(polygonFace, intersectingLine);
+            intersectionPoint = iLineAndLineIntersector.getIntersectionPoint();
 
             if (intersectionPoint.isPointDefined()) {
                 if (intersectionPoint.isContainedInLine(polygonFace)) {
@@ -92,10 +87,5 @@ public class PolygonCutter {
         }
 
         return null;
-
-    }
-
-    private boolean isPointDefined(Vector2 point) {
-        return !Float.isInfinite(point.x) && !Float.isNaN(point.x);
     }
 }

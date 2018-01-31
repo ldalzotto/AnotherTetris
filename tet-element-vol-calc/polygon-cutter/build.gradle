@@ -1,4 +1,4 @@
-group 'tet-element-vol-calc'
+group 'polygon-cutter'
 version '1.0'
 
 apply plugin: 'java'
@@ -13,8 +13,7 @@ repositories {
 }
 
 dependencies {
-    compile project(':tet-shape-debugger')
-    compile project(':tet-element-vol-calc:polygon-and-line-intersector')
     compile project(':tet-element-vol-calc:domain')
+    compile project(':tet-element-vol-calc:line-and-line-intersector')
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

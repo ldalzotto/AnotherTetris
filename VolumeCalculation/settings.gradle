@@ -11,6 +11,22 @@ include 'tet-element-domain'
 include 'tet-element-to-positionned-sprite'
 include 'tet-element-generator'
 include 'tet-physics-generation'
+
 include ':tet-element-vol-calc'
 project(':tet-element-vol-calc').projectDir = file('../tet-element-vol-calc')
 
+
+include ':tet-element-vol-calc:polygon-and-line-intersector'
+project(':tet-element-vol-calc:polygon-and-line-intersector').projectDir = file('../tet-element-vol-calc/polygon-and-line-intersector')
+
+include ':tet-element-vol-calc:line-and-line-intersector'
+project(':tet-element-vol-calc:line-and-line-intersector').projectDir = file('../tet-element-vol-calc/line-and-line-intersector')
+
+include ':tet-element-vol-calc:cutted-polygon-builder'
+project(':tet-element-vol-calc:cutted-polygon-builder').projectDir = file('../tet-element-vol-calc/cutted-polygon-builder')
+
+include ':tet-element-vol-calc:polygon-cutter'
+project(':tet-element-vol-calc:polygon-cutter').projectDir = file('../tet-element-vol-calc/polygon-cutter')
+
+include ':tet-element-vol-calc:domain'
+project(':tet-element-vol-calc:domain').projectDir = file('../tet-element-vol-calc/domain')

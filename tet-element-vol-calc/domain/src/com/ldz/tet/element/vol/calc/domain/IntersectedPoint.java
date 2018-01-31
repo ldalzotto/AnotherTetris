@@ -16,7 +16,7 @@
  *  Contributors:
  */
 
-package com.ldz.impl;
+package com.ldz.tet.element.vol.calc.domain;
 
 import com.badlogic.gdx.math.Vector2;
 

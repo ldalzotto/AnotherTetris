@@ -16,7 +16,7 @@
  *  Contributors:
  */
 
-package com.ldz.impl;
+package com.ldz.tet.element.vol.calc.domain;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
